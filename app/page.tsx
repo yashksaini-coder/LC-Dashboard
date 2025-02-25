@@ -2,7 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
-import { NextResponse } from 'next/server';
+// import { NextResponse } from 'next/server';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,7 @@ export default function Home() {
           }
           setLoading(false);
       } catch (err) {
-          setError('Failed to fetch problems');
+          console.error(err);
           setLoading(false);
       }
   }
