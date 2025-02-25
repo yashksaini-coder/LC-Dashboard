@@ -2,7 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
-// import { NextResponse } from 'next/server';
+import Link from "next/link";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -31,13 +31,26 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full bg-gray p-6 shadow-lg rounded-lg">
-      <h1 className="text-3xl font-bold mb-4">LeetCode Stats</h1>
-      <p className="mb-6 text-gray-600">
-        This is a simple Next.js app that fetches data from an API and displays
-        it on the page.
-      </p>
-
+    <div className="w-full h-full p-6 shadow-lg rounded-lg">
+      <div className="mb-3 bg-violet-800 w-[220px]">
+        <h1 className="text-3xl text-center font-bold mb-4">LC-Dashboard</h1>
+      </div>
+      <div>
+        <ul className="list-disc list-outside ml-4">
+              
+          <li className="text-white">
+            This is a simple Next.js app that fetches data from an API and displays
+            it on the page.
+          </li>
+          <li className="text-white mb-3"> 
+            Check the 
+              <span className="ml-1 mr-1 mb-3 font-bold text-black animation: bg-red-700 hover:bg-white hover:text-black">
+                <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
+              </span>
+            for more information.
+          </li>
+        </ul>
+      </div>
       {loading ? (
         <div className="flex justify-center">
           <p className="text-xl text-gray-500">Loading...</p>
