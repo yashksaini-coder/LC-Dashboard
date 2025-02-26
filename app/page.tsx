@@ -75,19 +75,25 @@ export default function Home() {
           </li>
           <li className="text-white mb-3"> 
             Check the 
-              <span className="ml-1 mr-1 mb-3 font-bold text-black animation: bg-red-700 hover:bg-white hover:text-black">
+            <div className=" ml-1 mr-1 w-[90px] align-items justify-center inline-block text-white animation: bg-cyan-700 hover:bg-white hover:text-black">
+              <span className="ml-1 mr-1 mb-3 justify-center font-bold">
                 <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
               </span>
+            </div>
             for more information.
           </li>
         </ul>
       </div>
       {loading ? (
-        <div className="flex justify-center">
+        <div className="flex mb-1 mt-1 justify-center">
           <p className="text-xl text-gray-500">Loading...</p>
         </div>
       ) : error ? (
-        <p className="text-red-500 animation">{error}</p>
+        <div className="h-6 w-[200px] border-20 bg-red-500 animate-pulse duration-100">
+          <span className="flex justify-center items-center h-full w-full">
+            <p className="text-white">{error}</p>
+          </span>
+        </div>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-200">

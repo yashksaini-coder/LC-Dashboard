@@ -20,18 +20,3 @@ body {
   font-family: monospace;
   font-size: 15px;
 }
-
-@keyframes blink {
-  0% {
-      background-color: black;
-      color: white;
-  }
-  50% {
-      background-color: white;
-      color: black;
-  }
-  100% {
-      background-color: black;
-      color: white;
-  }
-}
