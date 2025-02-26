@@ -11,10 +11,11 @@ export default function Home() {
   const [detailedProblems, setDetailedProblems] = useState<DetailedProblem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // New state variables for filters
+  // Filters and Pagination State
   const [difficulty, setDifficulty] = useState<string>("ALL");
-  const [company, setCompany] = useState<string>("ALL");
   const [tagSearch, setTagSearch] = useState<string>("");
+  const [page, setPage] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(10);
 
   async function fetchProblems() {
     try {
@@ -23,28 +24,30 @@ export default function Home() {
         throw new Error("API URL is not defined in environment variables");
       }
 
-      // Construct query parameters based on filters
       const difficultyParam = difficulty !== "ALL" ? `difficulty=${difficulty}` : "";
       const tagParam = tagSearch ? `tags=${tagSearch}` : "";
-      const queryParams = [difficultyParam, tagParam].filter(Boolean).join("&");
+      const skip = (page - 1) * limit;
+      const queryParams = [difficultyParam, tagParam, `limit=${limit}`, `skip=${skip}`]
+        .filter(Boolean)
+        .join("&");
 
       const res = await fetch(`${apiUrl}/problems?${queryParams}`);
       const data = await res.json();
       if (data && Array.isArray(data.problemsetQuestionList)) {
         setProblems(data.problemsetQuestionList);
-        fetchProblemsdata(data.problemsetQuestionList);
+        fetchProblemsData(data.problemsetQuestionList);
       } else {
-        setError('Failed to fetch problems');
+        setError("Failed to fetch problems");
         setLoading(false);
       }
     } catch (err) {
       console.error(err);
-      setError('Error fetching problems');
+      setError("Error fetching problems");
       setLoading(false);
     }
   }
 
-  async function fetchProblemsdata(problems: Problem[]) {
+  async function fetchProblemsData(problems: Problem[]) {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
       if (!apiUrl) {
@@ -62,7 +65,7 @@ export default function Home() {
       setLoading(false);
     } catch (err) {
       console.error(err);
-      setError('Error fetching detailed problems');
+      setError("Error fetching detailed problems");
       setLoading(false);
     }
   }
@@ -71,7 +74,7 @@ export default function Home() {
     if (typeof window !== "undefined") {
       fetchProblems();
     }
-  }, [difficulty, tagSearch]); // Add filters to the dependency array
+  }, [difficulty, tagSearch, page, limit]);
 
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
@@ -79,8 +82,30 @@ export default function Home() {
         <h1 className="text-3xl text-center font-bold mb-4">LC-Dashboard</h1>
       </div>
 
+      <div className="flex justify-end items-center my-6 gap-4">
+        <button className="px-4 py-2 border border-white text-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors disabled:opacity-50"
+          onClick={() => setPage(1)}
+          disabled={page === 1}>
+          Home
+        </button>
+        <button
+          className="px-4 py-2 border border-white text-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors disabled:opacity-50"
+          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          disabled={page === 1}
+        >
+          Previous
+        </button>
+        <span className="text-lg">Page {page}</span>
+        <button
+          className="px-4 py-2 border border-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors text-white"
+          onClick={() => setPage((prev) => prev + 1)}
+        >
+          Next
+        </button>
+      </div>
+
       {/* Filter UI */}
-      <div className="mb-4">
+      <div className="my-6">
         <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
           {
             ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option className=" border border-white px-4 py-2" value={e}>{e}</option>
@@ -96,10 +121,8 @@ export default function Home() {
           className="mr-2 outline-none min-w-96 bg-black text-white border border-white px-4 py-3"
         />
 
-        {/* Placeholder for company filter */}
-        <select value={company} onChange={(e) => setCompany(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
+        <select className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
           <option value="ALL">All Companies</option>
-          {/* Add company options here */}
         </select>
       </div>
 
