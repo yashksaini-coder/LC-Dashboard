@@ -102,7 +102,8 @@ export default function Home() {
                 <th className="border px-4 py-2">Video</th>
                 <th className="border px-4 py-2">Tags</th>
                 <th className="border px-4 py-2">Likes</th>
-                <th className="border px-4 py-2">Dislikes</th>               
+                <th className="border px-4 py-2">Dislikes</th> 
+                <th className="border px-4 py-2">Hints</th>              
               </tr>
             </thead>
             <tbody>
@@ -111,8 +112,10 @@ export default function Home() {
                   <tr key={problem.titleSlug} className="hover:bg-gray-800">
                     <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
                     <td className="border px-4 py-2">
-                      <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
-                         className="text-blue-600 hover:text-blue-800">
+                      <a href={`https://leetcode.com/problems/${problem.titleSlug}`
+                       }
+                        target = "_blank"
+                        className="text-blue-600 hover:text-blue-800">
                         {problem.title}
                       </a>
                     </td>
@@ -128,6 +131,7 @@ export default function Home() {
                     <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
+                    <td className="font-light border">{detailedProblems[index]?.hints[0]}</td>
                   </tr>
                 ))
               ) : (
