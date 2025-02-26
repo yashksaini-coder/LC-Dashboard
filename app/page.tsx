@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
 import Link from "next/link";
 import { DetailedProblem } from "./utils/detailedProblem"; // Import the new type
+import { HintCard } from "../components/HintCard";
+import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -63,7 +65,6 @@ export default function Home() {
     }
   }, []); // Add fetchProblems to the dependency array
 
-  // const m = Math.;
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="mb-3 bg-violet-800 w-[220px]">
@@ -91,26 +92,24 @@ export default function Home() {
           <p className="text-xl text-gray-500">Loading...</p>
         </div>
       ) : error ? (
-        <div className="h-6 w-[200px] border-20 bg-red-500 animate-pulse duration-100">
+        <div className="h-6 w-[200px] border-20 animate-pulse bg-red-600 duration-500">
           <span className="flex justify-center items-center h-full w-full">
-            <p className="text-white">{error}</p>
+            <p className="font-bold text-white">{error}</p>
           </span>
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200">
+        <div className="w-full h-full overflow-x-auto mt-4">
+          <table className="w-full h-full border border-gray-200">
             <thead>
-              <tr className="">
+              <tr className=" bg-gray-800 text-white">
                 <th className="border px-4 py-2">ID</th>
                 <th className="border px-4 py-2">Title</th>
                 <th className="border px-4 py-2">Difficulty</th>
                 <th className="border px-4 py-2">Acc %</th>
-                <th className="border px-4 py-2">Paid</th>
-                <th className="border px-4 py-2">Solution</th>
                 <th className="border px-4 py-2">Video</th>
                 <th className="border px-4 py-2">Tags</th>
-                <th className="border px-4 py-2">Likes</th>
-                <th className="border px-4 py-2">Dislikes</th> 
+                <th className="border px-4 py-2"><ThumbsUp className="text-green-600"/></th>
+                <th className="border px-4 py-2"><ThumbsDown className="text-red-600"/></th> 
                 <th className="border px-4 py-2">Hints</th>              
               </tr>
             </thead>
@@ -119,7 +118,7 @@ export default function Home() {
                 problems.map((problem, index) => (
                   <tr key={problem.titleSlug} className="hover:bg-gray-800">
                     <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
-                    <td className="border px-4 py-2">
+                    <td className="border w-[50%]text-sm font-bold px-4 py-2">
                       <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
                         target="_blank"
                         className="text-blue-600 hover:text-blue-100">
@@ -127,27 +126,18 @@ export default function Home() {
                       </a>
                     </td>
                     <td className={`text-center border px-4 py-2 ${problem.difficulty === 'Easy' ? 'text-green-600' :
-                      problem.difficulty === 'Medium' ? 'text-yellow-600' :
-                        'text-red-600'}`}>{problem.difficulty}</td>
+                      problem.difficulty === 'Medium' ? 'text-yellow-600' : 'text-red-600'}`}>{problem.difficulty}</td>
                     <td className="text-center border px-4 py-2">{Math.round((problem.acRate))}%</td>
-                    <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td>
-                    <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
-                    <td className="border text-sm px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
+                    <td className="border text-wrap text-xs px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
-                    <td className="border px-4 py-4 text-jusify">
-                        {detailedProblems[index]?.hints?.length > 0 ? (
-                        detailedProblems[index].hints.slice(2,3).map((hint, index) => (
-                        <div key={index} className="text-wrap">
-                        <ul className="list-inside list-disc">
-                          <li className="text-wrap text-xs">{String(hint)}</li>
-                        </ul>
-                        </div>
-                        ))
-                        ) : (
+                    <td className="border text-center px-4 py-2">
+                      {detailedProblems[index]?.hints?.length > 0 ? (
+                        <HintCard hints={detailedProblems[index].hints} />
+                      ) : (
                         <span className="text-red-500">No hints found</span>
-                        )}
+                      )}
                     </td>
                   </tr>
                 ))) : (

@@ -9,15 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-alert-dialog": "^1.1.6",
+    "@radix-ui/react-slot": "^1.1.2",
     "apicache": "^1.6.3",
     "axios": "^1.7.9",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "graphql": "^16.10.0",
     "graphql-request": "^7.1.2",
+    "lucide": "^0.476.0",
+    "lucide-react": "^0.476.0",
     "next": "15.1.7",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.2",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
