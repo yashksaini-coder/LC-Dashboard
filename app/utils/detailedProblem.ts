@@ -6,7 +6,7 @@ export interface DetailedProblem {
     difficulty: Difficulty;
     dislikes: number;
     exampleTestcases: object[];
-    hints: object[];
+    hints: [];
     isPaidOnly: boolean;
     likes: number;
     questionId: number;

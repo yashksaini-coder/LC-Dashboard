@@ -63,6 +63,7 @@ export default function Home() {
     }
   }, []); // Add fetchProblems to the dependency array
 
+  // const m = Math.;
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="mb-3 bg-violet-800 w-[220px]">
@@ -76,7 +77,7 @@ export default function Home() {
           </li>
           <li className="text-white mb-3"> 
             Check the 
-            <div className=" ml-1 mr-1 w-[90px] align-items justify-center inline-block text-white animation: bg-cyan-700 hover:bg-white hover:text-black">
+            <div className=" ml-1 mr-1 w-[90px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
               <span className="ml-1 mr-1 mb-3 justify-center font-bold">
                 <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
               </span>
@@ -132,16 +133,22 @@ export default function Home() {
                     <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
-                    <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
+                    <td className="border text-sm px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
-                    <td className="border">{detailedProblems[index]?.hints?.length ? (
-                      <ul>
-                        {detailedProblems[index].hints.map((hint, hintIndex) => (
-                          <li key={hintIndex}>{String(hint)}</li>
-                        ))}
-                      </ul>
-                    ) : 'No hints'}</td> 
+                    <td className="border px-4 py-4 text-jusify">
+                        {detailedProblems[index]?.hints?.length > 0 ? (
+                        detailedProblems[index].hints.slice(2,3).map((hint, index) => (
+                        <div key={index} className="text-wrap">
+                        <ul className="list-inside list-disc">
+                          <li className="text-wrap text-xs">{String(hint)}</li>
+                        </ul>
+                        </div>
+                        ))
+                        ) : (
+                        <span className="text-red-500">No hints found</span>
+                        )}
+                    </td>
                   </tr>
                 ))) : (
                 <tr>
