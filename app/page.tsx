@@ -62,16 +62,15 @@ export default function Home() {
           <table className="min-w-full border border-gray-200">
             <thead>
               <tr className="">
-                <th className="border px-4 py-2">Question ID</th>
+                <th className="border px-4 py-2">ID</th>
                 <th className="border px-4 py-2">Title</th>
                 <th className="border px-4 py-2">Difficulty</th>
-                <th className="border px-4 py-2">Acceptance %</th>
-                {/* <th className="border px-4 py-2">Favorite</th>
-                <th className="border px-4 py-2">Paid Only</th> */}
+                <th className="border px-4 py-2">Acc %</th>
+                {/* <th className="border px-4 py-2">Favorite</th> */}
+                <th className="border px-4 py-2">Paid</th>
                 <th className="border px-4 py-2">Solution</th>
-                <th className="border px-4 py-2">Video Solution</th>
-                {/* <th className="border px-4 py-2">Question ID</th> */}
-                <th className="border px-4 py-2">Topic Tags</th>
+                <th className="border px-4 py-2">Video</th>
+                <th className="border px-4 py-2">Tags</th>
               </tr>
             </thead>
             <tbody>
@@ -85,17 +84,16 @@ export default function Home() {
                         {problem.title}
                       </a>
                     </td>
-                    <td className={`border px-4 py-2 ${
+                    <td className={`text-center border px-4 py-2 ${
                       problem.difficulty === 'Easy' ? 'text-green-600' :
                       problem.difficulty === 'Medium' ? 'text-yellow-600' :
                       'text-red-600'
                     }`}>{problem.difficulty}</td>
-                    <td className="text-center border px-4 py-2">{Math.ceil(problem.acRate)}</td>
-                    {/* <td className="border px-4 py-2">{problem.isFavor ? "Yes" : "No"}</td>
-                    <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td> */}
+                    <td className="text-center border px-4 py-2">{Math.round((problem.acRate))}%</td>
+                    {/* <td className="border px-4 py-2">{problem.isFavor ? "Yes" : "No"}</td> */}
+                    <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
-                    {/* <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td> */}
                     <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                   </tr>
                 ))
