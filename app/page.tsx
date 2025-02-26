@@ -1,15 +1,20 @@
 "use client";
-import React from "react";
-import { useState, useEffect } from "react";
+
+import React, { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
 import Link from "next/link";
-import { DetailedProblem } from "./utils/detailedProblem"; // Import the new type
+import { DetailedProblem } from "./utils/detailedProblem";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [problems, setProblems] = useState<Problem[]>([]);
-  const [detailedProblems, setDetailedProblems] = useState<DetailedProblem[]>([]); // Specify the type
+  const [detailedProblems, setDetailedProblems] = useState<DetailedProblem[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  // New state variables for filters
+  const [difficulty, setDifficulty] = useState<string>("ALL");
+  const [company, setCompany] = useState<string>("ALL");
+  const [tagSearch, setTagSearch] = useState<string>("");
 
   async function fetchProblems() {
     try {
@@ -18,7 +23,12 @@ export default function Home() {
         throw new Error("API URL is not defined in environment variables");
       }
 
-      const res = await fetch(`${apiUrl}/problems`);
+      // Construct query parameters based on filters
+      const difficultyParam = difficulty !== "ALL" ? `difficulty=${difficulty}` : "";
+      const tagParam = tagSearch ? `tags=${tagSearch}` : "";
+      const queryParams = [difficultyParam, tagParam].filter(Boolean).join("&");
+
+      const res = await fetch(`${apiUrl}/problems?${queryParams}`);
       const data = await res.json();
       if (data && Array.isArray(data.problemsetQuestionList)) {
         setProblems(data.problemsetQuestionList);
@@ -59,36 +69,43 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetchProblems()
+      fetchProblems();
     }
-  }, []); // Add fetchProblems to the dependency array
+  }, [difficulty, tagSearch]); // Add filters to the dependency array
 
-  // const m = Math.;
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="mb-3 bg-violet-800 w-[220px]">
         <h1 className="text-3xl text-center font-bold mb-4">LC-Dashboard</h1>
       </div>
-      <div>
-        <ul className="list-disc list-outside ml-4">
-          <li className="text-white">
-            This is a simple Next.js app that fetches data from an API and displays
-            it on the page.
-          </li>
-          <li className="text-white mb-3"> 
-            Check the 
-            <div className=" ml-1 mr-1 w-[90px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
-              <span className="ml-1 mr-1 mb-3 justify-center font-bold">
-                <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
-              </span>
-            </div>
-            for more information.
-          </li>
-        </ul>
+
+      {/* Filter UI */}
+      <div className="mb-4">
+        <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
+          {
+            ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option className=" border border-white px-4 py-2" value={e}>{e}</option>
+            )
+          }
+        </select>
+
+        <input
+          type="text"
+          placeholder="Search by tags"
+          value={tagSearch}
+          onChange={(e) => setTagSearch(e.target.value)}
+          className="mr-2 outline-none min-w-96 bg-black text-white border border-white px-4 py-3"
+        />
+
+        {/* Placeholder for company filter */}
+        <select value={company} onChange={(e) => setCompany(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
+          <option value="ALL">All Companies</option>
+          {/* Add company options here */}
+        </select>
       </div>
+
       {loading ? (
         <div className="flex mb-1 mt-1 justify-center">
-          <p className="text-xl text-gray-500">Loading...</p>
+          <p className="text-xl text-neutral-500">Loading...</p>
         </div>
       ) : error ? (
         <div className="h-6 w-[200px] border-20 bg-red-500 animate-pulse duration-100">
@@ -98,7 +115,7 @@ export default function Home() {
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-200">
+          <table className="min-w-full border border-neutral-200">
             <thead>
               <tr className="">
                 <th className="border px-4 py-2">ID</th>
@@ -110,14 +127,14 @@ export default function Home() {
                 <th className="border px-4 py-2">Video</th>
                 <th className="border px-4 py-2">Tags</th>
                 <th className="border px-4 py-2">Likes</th>
-                <th className="border px-4 py-2">Dislikes</th> 
-                <th className="border px-4 py-2">Hints</th>              
+                <th className="border px-4 py-2">Dislikes</th>
+                <th className="border px-4 py-2">Hints</th>
               </tr>
             </thead>
             <tbody>
               {Array.isArray(problems) && problems.length > 0 ? (
                 problems.map((problem, index) => (
-                  <tr key={problem.titleSlug} className="hover:bg-gray-800">
+                  <tr key={problem.titleSlug} className="hover:bg-neutral-800">
                     <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
                     <td className="border px-4 py-2">
                       <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
@@ -137,17 +154,17 @@ export default function Home() {
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
                     <td className="border px-4 py-4 text-jusify">
-                        {detailedProblems[index]?.hints?.length > 0 ? (
-                        detailedProblems[index].hints.slice(2,3).map((hint, index) => (
-                        <div key={index} className="text-wrap">
-                        <ul className="list-inside list-disc">
-                          <li className="text-wrap text-xs">{String(hint)}</li>
-                        </ul>
-                        </div>
+                      {detailedProblems[index]?.hints?.length > 0 ? (
+                        detailedProblems[index].hints.slice(2, 3).map((hint, index) => (
+                          <div key={index} className="text-wrap">
+                            <ul className="list-inside list-disc">
+                              <li className="text-wrap text-xs">{String(hint)}</li>
+                            </ul>
+                          </div>
                         ))
-                        ) : (
+                      ) : (
                         <span className="text-red-500">No hints found</span>
-                        )}
+                      )}
                     </td>
                   </tr>
                 ))) : (
