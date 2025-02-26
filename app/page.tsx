@@ -48,8 +48,6 @@ export default function Home() {
       );
 
       setDetailedProblems(detailedProblemsData);
-      const parsed = JSON.parse(detailedProblemsData[0]);
-      console.log("Detailed"+parsed);
       setLoading(false);
     } catch (err) {
       console.error(err);
@@ -58,16 +56,12 @@ export default function Home() {
     }
   }
 
-
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       fetchProblems();
-      fetchProblemsdata(problems);
     }
   }, []);
 
-  
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="mb-3 bg-violet-800 w-[220px]">
@@ -132,12 +126,13 @@ export default function Home() {
                     <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
                     <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
-                    <td className="border px-4 py-2">{JSON.stringify(detailedProblems[index])}</td>
+                    <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
+                    <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td className="border px-4 py-2 text-center" colSpan={9}>No problems found</td>
+                  <td className="border px-4 py-2 text-center" colSpan={10}>No problems found</td>
                 </tr>
               )}
             </tbody>
