@@ -21,6 +21,7 @@ export default function Home() {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
       if (!apiUrl) {
+        setError("API URL is not defined in environment variables")
         throw new Error("API URL is not defined in environment variables");
       }
 
