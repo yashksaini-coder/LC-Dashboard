@@ -3,11 +3,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
 import Link from "next/link";
+import { DetailedProblem } from "./utils/detailedProblem"; // Import the new type
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [problems, setProblems] = useState<Problem[]>([]);
-  const [detailedProblems, setDetailedProblems] = useState<any[]>([]);
+  const [detailedProblems, setDetailedProblems] = useState<DetailedProblem[]>([]); // Specify the type
   const [error, setError] = useState<string | null>(null);
 
   async function fetchProblems() {
@@ -58,9 +59,9 @@ export default function Home() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      fetchProblems();
+      fetchProblems()
     }
-  }, []);
+  }, []); // Add fetchProblems to the dependency array
 
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
@@ -118,18 +119,15 @@ export default function Home() {
                   <tr key={problem.titleSlug} className="hover:bg-gray-800">
                     <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
                     <td className="border px-4 py-2">
-                      <a href={`https://leetcode.com/problems/${problem.titleSlug}`
-                       }
-                        target = "_blank"
-                        className="text-blue-600 hover:text-blue-800">
+                      <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
+                        target="_blank"
+                        className="text-blue-600 hover:text-blue-100">
                         {problem.title}
                       </a>
                     </td>
-                    <td className={`text-center border px-4 py-2 ${
-                      problem.difficulty === 'Easy' ? 'text-green-600' :
+                    <td className={`text-center border px-4 py-2 ${problem.difficulty === 'Easy' ? 'text-green-600' :
                       problem.difficulty === 'Medium' ? 'text-yellow-600' :
-                      'text-red-600'
-                    }`}>{problem.difficulty}</td>
+                        'text-red-600'}`}>{problem.difficulty}</td>
                     <td className="text-center border px-4 py-2">{Math.round((problem.acRate))}%</td>
                     <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
@@ -137,10 +135,15 @@ export default function Home() {
                     <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
-                    <td className="font-light border">{detailedProblems[index]?.hints[0]}</td>
+                    <td className="border">{detailedProblems[index]?.hints?.length ? (
+                      <ul>
+                        {detailedProblems[index].hints.map((hint, hintIndex) => (
+                          <li key={hintIndex}>{String(hint)}</li>
+                        ))}
+                      </ul>
+                    ) : 'No hints'}</td> 
                   </tr>
-                ))
-              ) : (
+                ))) : (
                 <tr>
                   <td className="border px-4 py-2 text-center" colSpan={10}>No problems found</td>
                 </tr>
