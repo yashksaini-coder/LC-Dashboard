@@ -7,41 +7,67 @@ import Link from "next/link";
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [problems, setProblems] = useState<Problem[]>([]);
+  const [detailedProblems, setDetailedProblems] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   async function fetchProblems() {
     try {
-        const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
-        // console.log("API URL:", apiUrl); // Debugging statement
-        
-        if (!apiUrl) {
-            throw new Error("API URL is not defined in environment variables");
-        }
+      const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
+      if (!apiUrl) {
+        throw new Error("API URL is not defined in environment variables");
+      }
 
-        const res = await fetch(`${apiUrl}/problems`);
-        const data = await res.json();
-        console.log("Fetched data:", data); // Debugging statement
-
-        if (data && Array.isArray(data.problemsetQuestionList)) {
-            setProblems(data.problemsetQuestionList);
-        } else {
-            setError('Failed to fetch problems');
-        }
+      const res = await fetch(`${apiUrl}/problems`);
+      const data = await res.json();
+      if (data && Array.isArray(data.problemsetQuestionList)) {
+        setProblems(data.problemsetQuestionList);
+        fetchProblemsdata(data.problemsetQuestionList);
+      } else {
+        setError('Failed to fetch problems');
         setLoading(false);
+      }
     } catch (err) {
-        console.error(err);
-        setError('Error fetching problems');
-        setLoading(false);
+      console.error(err);
+      setError('Error fetching problems');
+      setLoading(false);
     }
-}
-
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    fetchProblems();
   }
-}, []);
+
+  async function fetchProblemsdata(problems: Problem[]) {
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
+      if (!apiUrl) {
+        throw new Error("API URL is not defined in environment variables");
+      }
+
+      const detailedProblemsData = await Promise.all(
+        problems.map(async (problem) => {
+          const res = await fetch(`${apiUrl}/select?titleSlug=${problem.titleSlug}`);
+          return res.json();
+        })
+      );
+
+      setDetailedProblems(detailedProblemsData);
+      const parsed = JSON.parse(detailedProblemsData[0]);
+      console.log("Detailed"+parsed);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setError('Error fetching detailed problems');
+      setLoading(false);
+    }
+  }
 
 
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      fetchProblems();
+      fetchProblemsdata(problems);
+    }
+  }, []);
+
+  
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="mb-3 bg-violet-800 w-[220px]">
@@ -49,7 +75,6 @@ useEffect(() => {
       </div>
       <div>
         <ul className="list-disc list-outside ml-4">
-              
           <li className="text-white">
             This is a simple Next.js app that fetches data from an API and displays
             it on the page.
@@ -78,16 +103,17 @@ useEffect(() => {
                 <th className="border px-4 py-2">Title</th>
                 <th className="border px-4 py-2">Difficulty</th>
                 <th className="border px-4 py-2">Acc %</th>
-                {/* <th className="border px-4 py-2">Favorite</th> */}
                 <th className="border px-4 py-2">Paid</th>
                 <th className="border px-4 py-2">Solution</th>
                 <th className="border px-4 py-2">Video</th>
                 <th className="border px-4 py-2">Tags</th>
+                <th className="border px-4 py-2">Likes</th>
+                <th className="border px-4 py-2">Dislikes</th>               
               </tr>
             </thead>
             <tbody>
               {Array.isArray(problems) && problems.length > 0 ? (
-                problems.map((problem) => (
+                problems.map((problem, index) => (
                   <tr key={problem.titleSlug} className="hover:bg-gray-800">
                     <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
                     <td className="border px-4 py-2">
@@ -102,16 +128,16 @@ useEffect(() => {
                       'text-red-600'
                     }`}>{problem.difficulty}</td>
                     <td className="text-center border px-4 py-2">{Math.round((problem.acRate))}%</td>
-                    {/* <td className="border px-4 py-2">{problem.isFavor ? "Yes" : "No"}</td> */}
                     <td className="border px-4 py-2">{problem.isPaidOnly ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasSolution ? "Yes" : "No"}</td>
                     <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
                     <td className="border px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
+                    <td className="border px-4 py-2">{JSON.stringify(detailedProblems[index])}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td className="border px-4 py-2 text-center">No problems found</td>
+                  <td className="border px-4 py-2 text-center" colSpan={9}>No problems found</td>
                 </tr>
               )}
             </tbody>
