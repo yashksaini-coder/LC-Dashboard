@@ -10,25 +10,37 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   async function fetchProblems() {
-      try {
-          const res = await fetch('https://leetcode-stats-v1.onrender.com/problems');
-          const data = await res.json();
-          console.log("Fetched data:", data); // Debugging statement
-          if (data && Array.isArray(data.problemsetQuestionList)) {
-              setProblems(data.problemsetQuestionList);
-          } else {
-              setError('Failed to fetch problems');
-          }
-          setLoading(false);
-      } catch (err) {
-          console.error(err);
-          setLoading(false);
-      }
-  }
+    try {
+        const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
+        // console.log("API URL:", apiUrl); // Debugging statement
+        
+        if (!apiUrl) {
+            throw new Error("API URL is not defined in environment variables");
+        }
 
-  useEffect(() => {
-      fetchProblems();
-  }, []);
+        const res = await fetch(`${apiUrl}/problems`);
+        const data = await res.json();
+        console.log("Fetched data:", data); // Debugging statement
+
+        if (data && Array.isArray(data.problemsetQuestionList)) {
+            setProblems(data.problemsetQuestionList);
+        } else {
+            setError('Failed to fetch problems');
+        }
+        setLoading(false);
+    } catch (err) {
+        console.error(err);
+        setError('Error fetching problems');
+        setLoading(false);
+    }
+}
+
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    fetchProblems();
+  }
+}, []);
+
 
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
