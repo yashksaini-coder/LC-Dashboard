@@ -87,7 +87,7 @@ export default function Home() {
           <p className="text-xl text-gray-500">Loading...</p>
         </div>
       ) : error ? (
-        <p className="text-red-500">{error}</p>
+        <p className="text-red-500 animation">{error}</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full border border-gray-200">
