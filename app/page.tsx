@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Problem } from "./utils/problem";
 import Link from "next/link";
+import { HintCard } from "@/components/HintCard";
 import { DetailedProblem } from "./utils/detailedProblem"; // Import the new type
 
 export default function Home() {
@@ -109,7 +110,7 @@ export default function Home() {
       <div className="my-6">
         <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
           {
-            ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option className=" border border-white px-4 py-2" value={e}>{e}</option>
+            ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option key={e} className=" border border-white px-4 py-2" value={e}>{e}</option>
             )
           }
         </select>
@@ -121,11 +122,6 @@ export default function Home() {
           onChange={(e) => setTagSearch(e.target.value)}
           className="mr-2 outline-none min-w-96 bg-black text-white border border-white px-4 py-3"
         />
-
-        <select className="mr-2 outline-none bg-black text-white border border-white px-4 py-3">
-          <option value="ALL">All Companies</option>
-        </select>
-      </div>
 
       {loading ? (
         <div className="flex mb-1 mt-1 justify-center">
@@ -172,16 +168,10 @@ export default function Home() {
                     <td className="border text-wrap text-xs px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
                     <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
-                    <td className="border px-4 py-4 text-jusify">
-                        {detailedProblems[index]?.hints?.length > 0 ? (
-                        detailedProblems[index].hints.slice(2,3).map((hint, index) => (
-                        <div key={index} className="text-wrap">
-                        <ul className="list-inside list-disc">
-                          <li className="text-wrap text-xs">{String(hint)}</li>
-                        </ul>
-                        </div>
-                        ))
-                        ) : (
+                    <td className="border text-center px-4 py-2">
+                      {detailedProblems[index]?.hints?.length > 0 ? (
+                        <HintCard hints={detailedProblems[index].hints} />
+                      ) : (
                         <span className="text-red-500">No hints found</span>
                       )}
                     </td>
