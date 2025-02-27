@@ -17,7 +17,7 @@ export default function Home() {
   const [difficulty, setDifficulty] = useState<string>("ALL");
   const [tagSearch, setTagSearch] = useState<string>("");
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(20);
+  const [limit, setLimit] = useState<number>(10);
 
   async function fetchProblems() {
     try {
@@ -137,7 +137,7 @@ export default function Home() {
               Next
             </button>
           </div>
-          <div className="my-2">
+          <div className="my-2 justify-end items-center flex gap-2">  
             <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-2">
               {
                 ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option key={e} className=" border border-white px-4 py-2" value={e}>{e}</option>
@@ -152,6 +152,20 @@ export default function Home() {
               onChange={(e) => setTagSearch(e.target.value)}
               className="mr-2 outline-none min-w-96 h-9 bg-black text-white border border-white px-4 py-2"
             />
+          </div>
+          <div className="my-2 flex items-center gap-2">
+            <label className="text-white">Problems per page:</label>
+            <select
+              value={limit}
+              onChange={(e) => setLimit(Number(e.target.value))}
+              className="outline-none bg-black text-white border border-white px-4 py-2"
+            >
+              {[10, 20, 30].map((e) => (
+                <option key={e} value={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
           <div className="overflow-x-auto">
