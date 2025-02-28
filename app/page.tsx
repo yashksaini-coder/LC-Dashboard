@@ -93,7 +93,7 @@ export default function Home() {
   }, [difficulty, tagSearch, page, limit]);
   
   return (
-    <div className="w-full h-full p-6 shadow-lg rounded-lg">
+    <div className="p-6 shadow-lg rounded-lg">
       <div className="bg-violet-800 w-[220px]">
       {/* <Link href="/"> */}
         <h1 className="text-3xl text-center font-bold mb-4">LC-Dashboard</h1>
@@ -107,7 +107,7 @@ export default function Home() {
           </li>
           <li className="text-white mb-3"> 
             Check the 
-            <div className=" ml-1 mr-1 w-[90px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
+            <div className=" ml-1 mr-1 w-[85px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
               <span className="ml-1 mr-1 mb-3 justify-center font-bold">
                 <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
               </span>
@@ -123,7 +123,7 @@ export default function Home() {
       ) : error ? (
         <div className="h-6 w-[200px] border-20 animate-pulse bg-red-600 duration-500">
           <span className="flex justify-center items-center h-full w-full">
-            <p className="font-bold text-white">{error}</p>
+            <p className="font-semibold text-white">{error}</p>
           </span>
         </div>
       ) : (
@@ -154,8 +154,7 @@ export default function Home() {
           <div className="my-2 justify-end items-center flex gap-2">  
             <select value={difficulty} onChange={(e) => setDifficulty(e.target.value)} className="mr-2 outline-none bg-black text-white border border-white px-4 py-2">
               {
-                ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option key={e} className=" border border-white px-4 py-2" value={e}>{e}</option>
-                )
+                ["ALL", "EASY", "MEDIUM", "HARD"].map((e) => <option key={e} className=" border border-white px-4 py-2" value={e}>{e}</option>)
               }
             </select>
 
@@ -201,21 +200,22 @@ export default function Home() {
                 {Array.isArray(problems) && problems.length > 0 ? (
                   problems.map((problem, index) => (
                     <tr key={problem.titleSlug} className="hover:bg-neutral-800">
-                      <td className="text-center border px-4 py-2">{problem.questionFrontendId}</td>
-                      <td className="border w-[50%]text-sm font-bold px-4 py-2">
+                      <td className="text-center border px-4 py-2">{detailedProblems[index]?.questionId}</td>
+                      <td className="border text-sm font-bold px-4 py-2 hover:bg-cyan-500 hover:text-black">
                         <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
-                          target="_blank"
-                          className="text-blue-600 hover:text-blue-100">
-                          {problem.title}
+                          target="_blank">
+                            {`${problem.title}`}
                         </a>
                       </td>
-                      <td className={`text-center border px-4 py-2 ${problem.difficulty === 'Easy' ? 'text-green-600' :
+                      <td className={`text-center font-semibold border px-4 py-2 ${problem.difficulty === 'Easy' ? 'text-green-600' :
                         problem.difficulty === 'Medium' ? 'text-yellow-600' : 'text-red-600'}`}>{problem.difficulty}</td>
                       <td className="text-center border px-4 py-2">{Math.round((problem.acRate))}%</td>
                       <td className="text-center border px-4 py-2">{problem.hasVideoSolution ? "Yes" : "No"}</td>
                       <td className="border text-wrap text-xs px-4 py-2">{problem.topicTags.map((tag) => tag.name).join(", ")}</td>
-                      <td className="border px-4 py-2">{detailedProblems[index]?.likes}</td>
-                      <td className="border px-4 py-2">{detailedProblems[index]?.dislikes}</td>
+                      <td className="border px-4 py-2">{detailedProblems[index]?.likes > 1000 ? (`${Math.round(detailedProblems[index]?.likes / 1000)}K`
+                      ) : (detailedProblems[index]?.likes)}</td>
+                      <td className="border px-4 py-2">{detailedProblems[index]?.dislikes > 1000 ? (`${Math.round(detailedProblems[index]?.dislikes / 1000)}K`
+                      ) : (detailedProblems[index]?.dislikes)}</td>
                       <td className="border text-center px-4 py-2">
                         {detailedProblems[index]?.hints?.length > 0 ? (
                           <HintCard hints={detailedProblems[index].hints} />

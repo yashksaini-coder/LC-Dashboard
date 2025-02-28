@@ -1,4 +1,8 @@
-## LC Dashboard
+<div>
+    <img src="./public//NO-RESPONSIVE.png" alt="Not Responsive" width="40%">
+</div>
+
+<br>
 
 > [!NOTE]
 > This is the dashboard for the [LeetCode Journal](https://github.com/yashksaini-coder/Leetcode-Journal) project. 

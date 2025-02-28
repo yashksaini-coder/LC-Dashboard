@@ -15,12 +15,12 @@ import { Button } from "@/components/ui/button";
 export function HintCard({ hints }: { hints: string[] }) {
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
+      <AlertDialogTrigger asChild className="w-36rem">
         <Button className="py-2 text-black hover:bg-purple-700 bg-white hover:text-white" variant="outline">Hints</Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="backdrop-blur bg-opacity-100 border border-gray-100 border text-white">
+      <AlertDialogContent className="max-w-36rem backdrop-blur bg-opacity-100 border border-gray-100 border text-white">
         <AlertDialogHeader>
-          <AlertDialogTitle className="px-2 w-[15%] bg-purple-500">Hints</AlertDialogTitle>
+          <AlertDialogTitle className="w-16 px-2 bg-purple-500">Hints</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
           <div>
