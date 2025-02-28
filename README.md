@@ -36,8 +36,6 @@
 
 ---
 
-## 👤 Author
-
 <a href="https://github.com/yashksaini-coder">
     <table>
         <tbody>
@@ -45,9 +43,48 @@
                 <td align="left" valign="top" width="14.28%">
                     <img src="https://github.com/yashksaini-coder.png?s=60" width="130px;"/>
                     <br/>
-                    <h3>
+                    <h4 align="center">
                         <b>Yash K. Saini</b>
-                    </h3>
+                    </h4>
+                    <div align="center">
+                        <p>(Author)</p>
+                    </div>
+                </td>
+                <td align="left" valign="top" width="85%">
+                    <p>
+                        👋 Hi there! I'm <u><em><strong>Yash K. Saini</strong></em></u>, a self-taught software developer and a computer science student from India.
+                    </p>
+                    <ul>
+                     <li>
+                        I love building & contributing to Open Source software solutions & projects that help solve real-world problems.
+                    </li>
+                    <li>
+                        I want to build products & systems that can benefit & solve problems for many other DEVs.
+                    </li>
+                </td>
+            </tr>
+            <tr>
+                <td align="left" valign="top" width="14.28%">
+                    <img src="https://github.com/hanuchaudhary.png?s=60" width="130px;"/>
+                    <br/>
+                    <h5 align="center">
+                        <b>Hanu Chaudhary</b>
+                    </h5>
+                    <div align="center">
+                        <p>(Contributor)</p>
+                    </div>
+                </td>
+                <td align="left" valign="top" width="85%">
+                    <p>
+                        👋 Hi there! I'm <u><em><strong>Hanu Chaudhary</strong></em></u>, a self-taught software developer and a computer science student from India.
+                    </p>
+                    <ul>
+                     <li>
+                        I am a passionate Software Engineer with niche expertise in building highly robust, secure, and scalable applications using the latest and most efficient technologies.
+                    </li>
+                    <li>
+                        My mission is to deliver innovative solutions that create value for businesses and end-users while ensuring unparalleled performance and scalability.
+                    </li>
                 </td>
             </tr>
         </tbody>
