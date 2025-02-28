@@ -13,14 +13,14 @@
 
 ### TODO 🌟
 
-- [x] Fetch data from the API endpoint
-- [x] Display the data in a user-friendly way
-- [X] Add a search bar to search for problems
-- [X] Add a feature to **filter** problems based on tags
-- [ ] Add a feature to mark problems as **done**, for each user
-- [ ] Add a feature to mark problems as **favorite** or **star**, for each user
-- [X] Fix the tags filter by name, not `data-slug`
-- [X] Add Pagination
+- [x] Fetch data from the API endpoint.
+- [x] Display the data in a user-friendly way.
+- [X] Add a search bar to search for problems.
+- [X] Add a feature to **filter** problems based on tags.
+- [ ] Add a feature to mark problems as **done**, for each user.
+- [X] Fix the tags filter by name, not `data-slug`.
+- [X] Add Pagination.
+- [X] Disable `Next` button when reached the last problem.
 
 ### 🛠 Tech Stack
 

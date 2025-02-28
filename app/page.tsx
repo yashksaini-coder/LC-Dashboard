@@ -144,8 +144,9 @@ export default function Home() {
             </button>
             <span className="text-lg">Page {page}</span>
             <button
-              className="px-4 py-2 border border-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors text-white"
+              className="px-4 py-2 border border-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors text-white disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={() => setPage((prev) => prev + 1)}
+              disabled={problems.length === 0}
             >
               Next
             </button>
