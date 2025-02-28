@@ -15,11 +15,12 @@
 
 - [x] Fetch data from the API endpoint
 - [x] Display the data in a user-friendly way
-- [ ] Add a search bar to search for problems
-- [ ] Add a filter to filter problems based on tags
-- [ ] Add a feature to mark problems as done
-- [ ] Add a feature to mark problems as favorite
-- [ ] Add Pagination
+- [X] Add a search bar to search for problems
+- [X] Add a feature to **filter** problems based on tags
+- [ ] Add a feature to mark problems as **done**, for each user
+- [ ] Add a feature to mark problems as **favorite** or **star**, for each user
+- [X] Fix the tags filter by name, not `data-slug`
+- [X] Add Pagination
 
 ### 🛠 Tech Stack
 

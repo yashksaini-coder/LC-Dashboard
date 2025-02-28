@@ -6,6 +6,8 @@ import { HintCard } from "@/components/HintCard";
 import { DetailedProblem } from "./utils/detailedProblem"; // Import the new type
 import Link from "next/link";
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
+import { Loader } from "@/components/percept-ui/loader";
+import { getTagSlug } from "@/lib/tags";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -19,6 +21,15 @@ export default function Home() {
   const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
+  function parseTags(tagSearch: string): string {
+    if (!tagSearch) return '';
+    return tagSearch
+      .split(',')
+      .map(tag => getTagSlug(tag.trim()))
+      .filter(Boolean)
+      .join(',');
+  }
+  
   async function fetchProblems() {
     try {
       const apiUrl = process.env.NEXT_PUBLIC_LEETCODE_API_URL;
@@ -28,12 +39,14 @@ export default function Home() {
       }
 
       const difficultyParam = difficulty !== "ALL" ? `difficulty=${difficulty}` : "";
-      const tagParam = tagSearch ? `tags=${tagSearch}` : "";
+      const parsedTags = parseTags(tagSearch); // Call parseTags function
+      const tagParam = parsedTags ? `tags=${parsedTags}` : "";
       const skip = (page - 1) * limit;
       const queryParams = [difficultyParam, tagParam, `limit=${limit}`, `skip=${skip}`]
         .filter(Boolean)
         .join("&");
-
+      
+      // console.log(queryParams); // Debug statement:- Log the query params to the console
       const res = await fetch(`${apiUrl}/problems?${queryParams}`);
       const data = await res.json();
       if (data && Array.isArray(data.problemsetQuestionList)) {
@@ -78,7 +91,7 @@ export default function Home() {
       fetchProblems();
     }
   }, [difficulty, tagSearch, page, limit]);
-
+  
   return (
     <div className="w-full h-full p-6 shadow-lg rounded-lg">
       <div className="bg-violet-800 w-[220px]">
@@ -105,7 +118,7 @@ export default function Home() {
       </div>
       {loading ? (
         <div className="flex mb-1 mt-1 justify-center">
-          <p className="text-xl text-neutral-500">Loading...</p>
+          <Loader color="purple" size="xl"/>
         </div>
       ) : error ? (
         <div className="h-6 w-[200px] border-20 animate-pulse bg-red-600 duration-500">
@@ -114,7 +127,7 @@ export default function Home() {
           </span>
         </div>
       ) : (
-        <>
+        <> 
         <div className="flex justify-between items-center mb-3">
         <div className="flex justify-end items-center my-6 gap-4">
             <button className="px-4 py-2 border border-white text-white font-semibold hover:bg-neutral-600/50 duration-200 transition-colors disabled:opacity-50"
