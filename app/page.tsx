@@ -19,7 +19,7 @@ export default function Home() {
   // Filters and Pagination State
   const [difficulty, setDifficulty] = useState<string>("ALL");
   const [tagSearch, setTagSearch] = useState<string>("");
-  const [page, setPage] = useState<number>(345);
+  const [page, setPage] = useState<number>(1);
   const [limit, setLimit] = useState<number>(10);
 
   function parseTags(tagSearch: string): string {
