@@ -118,20 +118,19 @@ export default function Home() {
             </li>
           </ul>
         </div>
-        <div className="font-semibold text-black grid justify-center items-center gap-2">
-          <div className="h-6 flex bg-cyan-500">
-            <Ban size={20}/>
+        {/* Div icons to show the color pattern for Free & Paid problems */}
+        {/* <div className="font-semibold content-center text-black grid justify-center items-center gap-2 ml-4">
+          <div className="flex bg-cyan-500">
             <p className="mr-2 ml-2">
               Free Problems
             </p>
           </div>
           <div className="flex bg-amber-500">
-            <IndianRupee size={20}/>
-            <p className="mr-2">
+            <p className="mr-2 ml-2">
               Paid Problems
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
       {loading ? (
         <div className="flex mb-1 mt-1 justify-center">
