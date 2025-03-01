@@ -25,6 +25,8 @@
 - [X] Fix the tags filter by name, not `data-slug`.
 - [X] Add Pagination.
 - [X] Disable `Next` button when reached the last problem.
+- [X] Add a feature to Highlight the problems that are Premium.
+
 
 ### 🛠 Tech Stack
 

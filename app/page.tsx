@@ -8,6 +8,7 @@ import Link from "next/link";
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Loader } from "@/components/percept-ui/loader";
 import { getTagSlug } from "@/lib/tags";
+import { IndianRupee, Ban } from 'lucide-react';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ export default function Home() {
   // Filters and Pagination State
   const [difficulty, setDifficulty] = useState<string>("ALL");
   const [tagSearch, setTagSearch] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(345);
   const [limit, setLimit] = useState<number>(10);
 
   function parseTags(tagSearch: string): string {
@@ -99,22 +100,38 @@ export default function Home() {
         <h1 className="text-3xl text-center font-bold mb-4">LC-Dashboard</h1>
       {/* </Link> */}
       </div>
-      <div>
-        <ul className="list-disc list-outside ml-4">
-          <li className="text-white">
-            This is a simple Next.js app that fetches data from an API and displays
-            it on the page.
-          </li>
-          <li className="text-white mb-3"> 
-            Check the 
-            <div className=" ml-1 mr-1 w-[85px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
-              <span className="ml-1 mr-1 mb-3 justify-center font-bold">
-                <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
-              </span>
-            </div>
-            for more information.
-          </li>
-        </ul>
+      <div className="flex justify-stretch mb-4">
+        <div className="gap-2">
+          <ul className="list-disc list-outside ml-4">
+            <li className="text-white">
+              This is a simple Next.js app that fetches data from an API and displays
+              it on the page.
+            </li>
+            <li className="text-white mb-3"> 
+              Check the 
+              <div className=" ml-1 mr-1 w-[85px] align-items justify-center inline-block text-black hover:bg-cyan-700 bg-white hover:text-white">
+                <span className="ml-1 mr-1 mb-3 justify-center font-bold">
+                  <Link href="https://github.com/yashksaini-coder/LC-Dashboard" target="_blank">Repository</Link>
+                </span>
+              </div>
+              for more information.
+            </li>
+          </ul>
+        </div>
+        <div className="font-semibold text-black grid justify-center items-center gap-2">
+          <div className="h-6 flex bg-cyan-500">
+            <Ban size={20}/>
+            <p className="mr-2 ml-2">
+              Free Problems
+            </p>
+          </div>
+          <div className="flex bg-amber-500">
+            <IndianRupee size={20}/>
+            <p className="mr-2">
+              Paid Problems
+            </p>
+          </div>
+        </div>
       </div>
       {loading ? (
         <div className="flex mb-1 mt-1 justify-center">
@@ -201,7 +218,7 @@ export default function Home() {
                   problems.map((problem, index) => (
                     <tr key={problem.titleSlug} className="hover:bg-neutral-800">
                       <td className="text-center border px-4 py-2">{detailedProblems[index]?.questionId}</td>
-                      <td className="border text-sm font-bold px-4 py-2 hover:bg-cyan-500 hover:text-black">
+                        <td className={`border text-sm font-bold px-4 py-2 ${detailedProblems[index]?.isPaidOnly ? 'hover:bg-amber-500' : 'hover:bg-cyan-500'} hover:text-black`}>
                         <a href={`https://leetcode.com/problems/${problem.titleSlug}`}
                           target="_blank">
                             {`${problem.title}`}
@@ -226,7 +243,7 @@ export default function Home() {
                     </tr>
                   ))) : (
                   <tr>
-                    <td className="border px-4 py-2 text-center" colSpan={10}>No problems found</td>
+                    <td className="border px-4 py-2 text-center" rowSpan={10} colSpan={10}>No problems found</td>
                   </tr>
                 )}
               </tbody>
