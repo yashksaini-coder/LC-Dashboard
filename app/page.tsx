@@ -8,7 +8,7 @@ import Link from "next/link";
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Loader } from "@/components/percept-ui/loader";
 import { getTagSlug } from "@/lib/tags";
-import { IndianRupee, Ban } from 'lucide-react';
+// import { IndianRupee, Ban } from 'lucide-react';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);

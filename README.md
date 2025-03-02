@@ -21,11 +21,12 @@
 - [x] Display the data in a user-friendly way.
 - [X] Add a search bar to search for problems.
 - [X] Add a feature to **filter** problems based on tags.
-- [ ] Add a feature to mark problems as **done**, for each user.
+- ~~[ ] Add a feature to mark problems as **done**, for each user.~~
 - [X] Fix the tags filter by name, not `data-slug`.
 - [X] Add Pagination.
 - [X] Disable `Next` button when reached the last problem.
 - [X] Add a feature to Highlight the problems that are Premium.
+- [ ] Make the Application Responsive.
 
 
 ### 🛠 Tech Stack
