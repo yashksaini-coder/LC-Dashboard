@@ -1,11 +1,5 @@
-<div>
-    <img src="./public//NO-RESPONSIVE.png" alt="Not Responsive" width="40%">
-</div>
-
-<br>
-
-> [!NOTE]
-> This is the dashboard for the [LeetCode Journal](https://github.com/yashksaini-coder/Leetcode-Journal) project. 
+> [!IMPORTANT]
+>
 > A simple NEXT.js web application that displays the data fetched from the API endpoint in a user-friendly way. 
 
 ---
@@ -63,30 +57,6 @@
                     </li>
                     <li>
                         I want to build products & systems that can benefit & solve problems for many other DEVs.
-                    </li>
-                </td>
-            </tr>
-            <tr>
-                <td align="left" valign="top" width="14.28%">
-                    <img src="https://github.com/hanuchaudhary.png?s=60" width="130px;"/>
-                    <br/>
-                    <h5 align="center">
-                        <b>Hanu Chaudhary</b>
-                    </h5>
-                    <div align="center">
-                        <p>(Contributor)</p>
-                    </div>
-                </td>
-                <td align="left" valign="top" width="85%">
-                    <p>
-                        👋 Hi there! I'm <u><em><strong>Hanu Chaudhary</strong></em></u>, a self-taught software developer and a computer science student from India.
-                    </p>
-                    <ul>
-                     <li>
-                        I am a passionate Software Engineer with niche expertise in building highly robust, secure, and scalable applications using the latest and most efficient technologies.
-                    </li>
-                    <li>
-                        My mission is to deliver innovative solutions that create value for businesses and end-users while ensuring unparalleled performance and scalability.
                     </li>
                 </td>
             </tr>
