@@ -20,7 +20,7 @@
 - [X] Add Pagination.
 - [X] Disable `Next` button when reached the last problem.
 - [X] Add a feature to Highlight the problems that are Premium.
-- [ ] Make the Application Responsive.
+- [X] Make the Application Responsive.
 
 
 ### 🛠 Tech Stack
